@@ -3,36 +3,45 @@
 import { useState, useMemo, useEffect } from "react";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useDebounce } from "use-debounce";
-import { fetchNotes, FetchNotesResponse, FetchNotesParams } from "@/lib/api";
 
-import SearchBox from "../../components/SearchBox/SearchBox";
-import Pagination from "../../components/Pagination/Pagination";
-import NoteList from "../../components/NoteList/NoteList";
-import Modal from "../../components/Modal/Modal";
-import NoteForm from "../../components/NoteForm/NoteForm";
+import {
+  fetchNotes,
+  type FetchNotesResponse,
+  type FetchNotesParams,
+} from "@/lib/api";
 
+import SearchBox from "@/components/SearchBox/SearchBox";
+import Pagination from "@/components/Pagination/Pagination";
+import NoteList from "@/components/NoteList/NoteList";
+import Modal from "@/components/Modal/Modal";
+import NoteForm from "@/components/NoteForm/NoteForm";
+import type { NoteTag } from "@/types/note";
 import css from "./notes.module.css";
 
-export default function NotesClient() {
+export default function NotesClient({ initialTag }: { initialTag?: NoteTag }) {
   const [page, setPage] = useState(1);
   const [perPage] = useState(12);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
 
-  const queryParams: FetchNotesParams = useMemo(
-    () => ({
+ 
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearchTerm, initialTag]);
+
+ 
+  const queryParams: FetchNotesParams = useMemo(() => {
+    const p: FetchNotesParams = {
       page,
       perPage,
       search: debouncedSearchTerm,
-    }),
-    [page, perPage, debouncedSearchTerm]
-  );
+    };
+    if (initialTag) p.tag = initialTag;
+    return p;
+  }, [page, perPage, debouncedSearchTerm, initialTag]);
 
-  useEffect(() => {
-    setPage(1);
-  }, [debouncedSearchTerm]);
-
+  
   const { data, isLoading, isError, isFetching } = useQuery<FetchNotesResponse>(
     {
       queryKey: ["notes", queryParams],

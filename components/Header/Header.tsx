@@ -1,6 +1,7 @@
 // components/Header/Header.tsx
 import Link from "next/link";
 import css from "./Header.module.css";
+import TagsMenu from "../TagsMenu/TagsMenu";
 
 export default function Header() {
   return (
@@ -13,9 +14,7 @@ export default function Header() {
           <li>
             <Link href="/">Home</Link>
           </li>
-          <li>
-            <Link href="/notes">Notes</Link>
-          </li>
+          <li><TagsMenu /></li>
         </ul>
       </nav>
     </header>

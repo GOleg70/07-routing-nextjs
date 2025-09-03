@@ -27,6 +27,12 @@ export const fetchNotes = async (params: FetchNotesParams) => {
   return data;
 };
 
+
+export async function fetchTags(): Promise<string[]> {
+  const res = await instance.get("notes/tags");
+  return res.data;
+} 
+
 export const fetchNoteById = async (id: string) => {
   const { data } = await instance.get<Note>(`/notes/${id}`);
   return data;
