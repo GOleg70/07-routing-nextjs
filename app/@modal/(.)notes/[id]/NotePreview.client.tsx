@@ -5,7 +5,7 @@ import { fetchNoteById } from "@/lib/api";
 import type { Note } from "@/types/note";
 import Modal from "@/components/Modal/Modal";
 import { useRouter } from "next/navigation";
-import css from "@/components/NotePreview/NotePreview.client.module.css";
+import css from "@/app/@modal/(.)notes/[id]/NotePreview.client.module.css";
 
 export default function NotePreview({ id }: { id: string }) {
   
