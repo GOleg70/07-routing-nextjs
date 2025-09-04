@@ -30,9 +30,9 @@ export default function NotesFilterLayout({ children, sidebar, modal }: NotesFil
         <aside className={css.sidebar}>
           {sidebar}
         </aside>
-        {/* <section className={css.content}> */}
+       <section className={css.notesWrapper}>
           {children}
-        {/* </section> */}
+        </section>
       </div>
       {modal}
     </>
