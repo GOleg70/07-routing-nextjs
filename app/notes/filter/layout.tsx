@@ -1,15 +1,39 @@
-import { ReactNode } from "react";
+// import { ReactNode } from "react";
 
-export default function NotesFilterLayout({
-  children,
-  modal,
-}: {
+// export default function NotesFilterLayout({
+//   children,
+//   modal,
+// }: {
+//   children: ReactNode;
+//   modal?: ReactNode;
+// }) {
+//   return (
+//     <>
+//       <section>{children}</section>
+//       {modal}
+//     </>
+//   );
+// }
+import { ReactNode } from "react";
+import css from "./layout.module.css";
+
+interface NotesFilterLayoutProps {
   children: ReactNode;
-  modal?: ReactNode;
-}) {
+  sidebar: ReactNode;
+  modal: ReactNode;
+}
+
+export default function NotesFilterLayout({ children, sidebar, modal }: NotesFilterLayoutProps) {
   return (
     <>
-      <section>{children}</section>
+      <div className={css.container}>
+        <aside className={css.sidebar}>
+          {sidebar}
+        </aside>
+        {/* <section className={css.content}> */}
+          {children}
+        {/* </section> */}
+      </div>
       {modal}
     </>
   );
